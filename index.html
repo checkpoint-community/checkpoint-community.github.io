@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkpoints ML Community</title>
+    <style>
+      /* Basic reset and typography */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        padding: 20px;
+      }
+      a {
+        color: #0066cc;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      /* Container */
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      header h1 {
+        font-size: 2rem;
+      }
+
+      section {
+        margin-bottom: 2rem;
+      }
+      section h2 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      ul {
+        margin-left: 1rem;
+        margin-bottom: 1rem;
+      }
+      li {
+        margin-bottom: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Checkpoint Community</h1>
+        <p>There are many other ML enthusiasts just like you.</p>
+      </header>
+
+      <section id="about">
+        <h2>About</h2>
+        <p>
+          Checkpoint helps you find them. We organize events, meetups,
+          hackathons, and hacker-nights. We believe that Italy, and Europe to a
+          larger extent are _NOT_ suffering from a talent shortage. Rather, they
+          are suffering from fragmentation, isolation and self-defeating
+          mentality. We want to change that.
+        </p>
+      </section>
+
+      <section id="upcoming-events">
+        <h2>Upcoming Events</h2>
+        <ul id="upcoming-list">
+          <!-- Filled dynamically -->
+        </ul>
+      </section>
+
+      <section id="past-events">
+        <h2>Past Events</h2>
+        <ul id="past-list">
+          <!-- Filled dynamically -->
+        </ul>
+      </section>
+
+      <footer style="text-align: center; font-size: 0.9rem; color: #666">
+        <p>&copy; 2025 Checkpoints ML Community</p>
+      </footer>
+    </div>
+
+    <script>
+      // Master list of events
+      const events = [
+        {
+          date: "2025-03-03",
+          title: "AI Tinkerers Rome – March 3, 2025",
+          url: "https://rome.aitinkerers.org/",
+        },
+        {
+          date: "2025-05-08",
+          title: "AI Tinkerers Milan – May 8, 2025",
+          url: "https://milan.aitinkerers.org/p/ai-tinkerers-milan-may-8-2025",
+        },
+        {
+          date: "2025-05-30",
+          title: "AI Tinkerers Rome – May 30, 2025",
+          url: "https://rome.aitinkerers.org/",
+        },
+        {
+          date: "2025-06-10",
+          title: "AI Tinkerers Milan – June 10, 2025",
+          url: "https://milan.aitinkerers.org/p/ai-tinkerers-milan-june-10-2025-community-demos-networking",
+        },
+        {
+          date: "2025-07-19",
+          title: "AI Coder Dojo (IRL)",
+          url: "https://lu.ma/d4tubldm",
+        },
+      ];
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const today = new Date();
+        const upcomingList = document.getElementById("upcoming-list");
+        const pastList = document.getElementById("past-list");
+
+        events.forEach((evt) => {
+          const eventDate = new Date(evt.date);
+          const li = document.createElement("li");
+          li.innerHTML = `<time datetime="${evt.date}">${eventDate.toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}</time> – <a href="${evt.url}" target="_blank">${evt.title}</a>`;
+          if (eventDate >= today) {
+            upcomingList.appendChild(li);
+          } else {
+            pastList.appendChild(li);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
