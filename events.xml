@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>Checkpoint Events</title>
+  <link>https://checkpoint-community.github.io/</link>
+  <description>Upcoming and past events</description>
+  <item>
+    <title>AI Tinkerers Rome</title>
+    <link>https://rome.aitinkerers.org/p/ai-tinkerers-rome-march-3-2025</link>
+    <description>Rome</description>
+    <pubDate>Mon, 03 Mar 2025 00:00:00 GMT</pubDate>
+  </item>
+  <item>
+    <title>AI Tinkerers Milan</title>
+    <link>https://milan.aitinkerers.org/p/ai-tinkerers-milan-may-8-2025</link>
+    <description>Milan</description>
+    <pubDate>Thu, 08 May 2025 00:00:00 GMT</pubDate>
+  </item>
+  <item>
+    <title>AI Tinkerers Rome</title>
+    <link>https://rome.aitinkerers.org/p/ai-tinkerers-rome-may-30-2025</link>
+    <description>Rome</description>
+    <pubDate>Fri, 30 May 2025 00:00:00 GMT</pubDate>
+  </item>
+  <item>
+    <title>AI Tinkerers Milan</title>
+    <link>https://milan.aitinkerers.org/p/ai-tinkerers-milan-june-10-2025-community-demos-networking</link>
+    <description>Milan</description>
+    <pubDate>Tue, 10 Jun 2025 00:00:00 GMT</pubDate>
+  </item>
+  <item>
+    <title>ML Dojo #1</title>
+    <link>https://lu.ma/nugtfy0p?tk=69quCw</link>
+    <description>Rome</description>
+    <pubDate>Sun, 13 Jul 2025 00:00:00 GMT</pubDate>
+  </item>
+  <item>
+    <title>AI Coder Dojo (IRL)</title>
+    <link>https://lu.ma/d4tubldm</link>
+    <description>Padua</description>
+    <pubDate>Sat, 19 Jul 2025 00:00:00 GMT</pubDate>
+  </item>
+</channel>
+</rss>

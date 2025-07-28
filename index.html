@@ -74,7 +74,7 @@
       </section>
 
       <section id="upcoming-events">
-        <h2>Upcoming Events</h2>
+        <h2>Upcoming Events <a href="events.xml" style="font-size:0.8rem">RSS</a></h2>
         <ul id="upcoming-list">
           <!-- Filled dynamically -->
         </ul>
@@ -147,47 +147,9 @@
       </style>
 
     <script>
-      // Master list of events with locations
-      const events = [
-        {
-          date: "2025-03-03",
-          title: "AI Tinkerers Rome",
-          url: "https://rome.aitinkerers.org/p/ai-tinkerers-rome-march-3-2025",
-          location: "Rome",
-        },
-        {
-          date: "2025-05-08",
-          title: "AI Tinkerers Milan",
-          url: "https://milan.aitinkerers.org/p/ai-tinkerers-milan-may-8-2025",
-          location: "Milan",
-        },
-        {
-          date: "2025-05-30",
-          title: "AI Tinkerers Rome",
-          url: "https://rome.aitinkerers.org/p/ai-tinkerers-rome-may-30-2025",
-          location: "Rome",
-        },
-        {
-          date: "2025-06-10",
-          title: "AI Tinkerers Milan",
-          url: "https://milan.aitinkerers.org/p/ai-tinkerers-milan-june-10-2025-community-demos-networking",
-          location: "Milan",
-        },
-        {
-          date: "2025-07-13",
-          title: "ML Dojo #1",
-          url: "https://lu.ma/nugtfy0p?tk=69quCw",
-          location: "Rome",
-        },
-        {
-          date: "2025-07-19",
-          title: "AI Coder Dojo (IRL)",
-          url: "https://lu.ma/d4tubldm",
-          location: "Padua",
-        },
-      ];
-
-      document.addEventListener("DOMContentLoaded", () => {
+      document.addEventListener("DOMContentLoaded", async () => {
+        const res = await fetch('events.json');
+        const events = await res.json();
         const today = new Date();
         const upcomingList = document.getElementById("upcoming-list");
         const pastList = document.getElementById("past-list");
