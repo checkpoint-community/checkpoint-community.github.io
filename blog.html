@@ -7,7 +7,7 @@
   <script>
     async function loadPosts() {
       try {
-        const res = await fetch('blog.json');
+        const res = await fetch('blog.json?v=' + Date.now());
         if (!res.ok) return;
         const posts = await res.json();
         const list = document.getElementById('post-list');
