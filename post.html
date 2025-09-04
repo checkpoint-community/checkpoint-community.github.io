@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Post – Checkpoints ML</title>
+  <link rel="stylesheet" href="style.css" />
+  <script></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 id="post-title">Post</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+      </nav>
+      <p id="post-meta"></p>
+    </header>
+
+    <div id="embed-container" style="margin-top: 16px;">
+      <div style="height: 75vh; border: 1px solid #ccc;">
+        <iframe id="embed-frame" src="about:blank" style="width: 100%; height: 100%; border: 0;" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
+      </div>
+      <small>Note: some sites may block embedding; use the Original link if empty.</small>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      function getQueryParam(name) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+      }
+
+      function render() {
+        const url = getQueryParam('url') || getQueryParam('source_url') || getQueryParam('src');
+        const title = getQueryParam('title') || 'Post';
+        const author = getQueryParam('author') || '';
+        const date = getQueryParam('date') || '';
+        document.getElementById('post-title').textContent = title;
+        document.title = title + ' – Checkpoints ML';
+        const parts = [];
+        if (author) parts.push(author);
+        if (date) parts.push(date);
+        if (url) parts.push(`<a href="${url}" target="_blank" rel="noopener noreferrer">Original</a>`);
+        document.getElementById('post-meta').innerHTML = parts.join(' · ');
+        if (url) {
+          document.getElementById('embed-frame').src = url;
+        } else {
+          document.getElementById('embed-container').innerHTML = '<p>Missing url parameter.</p>';
+        }
+      }
+
+      render();
+    })();
+  </script>
+</body>
+</html>
+
+

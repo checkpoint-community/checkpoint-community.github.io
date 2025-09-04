@@ -4,6 +4,28 @@
   <meta charset="UTF-8" />
   <title>Blog – Checkpoints ML</title>
   <link rel="stylesheet" href="style.css" />
+  <script>
+    async function loadPosts() {
+      try {
+        const res = await fetch('blog.json');
+        if (!res.ok) return;
+        const posts = await res.json();
+        const list = document.getElementById('post-list');
+        list.innerHTML = '';
+        posts.forEach(p => {
+          const li = document.createElement('li');
+          const embedUrl = p.source_url || p.url || p.src;
+          const url = `post.html?url=${encodeURIComponent(embedUrl)}&title=${encodeURIComponent(p.title || '')}&date=${encodeURIComponent(p.date || '')}`;
+          li.innerHTML = `<a href="${url}">${p.title}</a>` + (p.date ? ` <small>${p.date}</small>` : '');
+          list.appendChild(li);
+        });
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+      }
+    }
+    document.addEventListener('DOMContentLoaded', loadPosts);
+  </script>
 </head>
 <body>
   <div class="container">
@@ -17,8 +39,8 @@
 
     <section>
       <h2>Latest Posts</h2>
-      <ul>
-        <!--<li><a href="posts/post1.html">Nasce Checkpoint.</a></li>-->
+      <ul id="post-list">
+        <li>Loading…</li>
       </ul>
     </section>
   </div>
