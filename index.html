@@ -1,131 +1,134 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Checkpoint</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        <h1>Checkpoint</h1>
-        <p class="lead">There are many other ML enthusiasts just like you.</p>
-        <nav>
-          <a href="index.html">Home</a> | <a href="blog.html">Blog</a>
-        </nav>
-      </header>
 
-      <section id="about">
-        <h2>About</h2>
-        <p>
-          We organize events, meetups, hackathons, and hacker-spaces. We believe
-          that Italy, and Europe to a larger extent are _NOT_ suffering from a
-          talent shortage. Rather, they are suffering from fragmentation,
-          isolation and self-defeating mentality. We want to change that.
-        </p>
-      </section>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkpoint</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-      <section id="upcoming-events">
-        <h2>Upcoming Events <small><a href="events.xml">RSS</a></small></h2>
-        <div class="events-header">
-          <span>Date</span>
-          <span>Location</span>
-          <span>Event</span>
-        </div>
-        <ul id="upcoming-list" class="events-list">
-          <!-- Filled dynamically -->
-        </ul>
-      </section>
+<body>
+  <div class="container">
+    <header>
+      <h1>Checkpoint</h1>
+      <p class="lead">There are many other ML enthusiasts just like you.</p>
+      <nav>
+        <a href="index.html">Home</a> | <a href="blog.html">Blog</a>
+      </nav>
+    </header>
 
-      <section id="past-events">
-        <h2>Past Events</h2>
-        <div class="events-header">
-          <span>Date</span>
-          <span>Location</span>
-          <span>Event</span>
-        </div>
-        <ul id="past-list" class="events-list">
-          <!-- Filled dynamically -->
-        </ul>
-      </section>
+    <section id="about">
+      <h2>About</h2>
+      <p>
+        We organize events, meetups, hackathons, and hacker-spaces. We believe
+        that Italy, and Europe to a larger extent are _NOT_ suffering from a
+        talent shortage. Rather, they are suffering from fragmentation,
+        isolation and self-defeating mentality. We want to change that.
+      </p>
+    </section>
 
-      <section id="dojo-carousel">
-        <h2>Our First ML Dojo – July 13, 2025</h2>
-        <div class="carousel">
-          <button class="carousel-btn" id="prevBtn">&#10094;</button>
-          <img id="carouselImage" src="assets/images/2025-july-13-dojo/mldojo1-1.jpg" alt="Coding Dojo Photo">
-          <button class="carousel-btn" id="nextBtn">&#10095;</button>
-        </div>
-      </section>
+    <section id="upcoming-events">
+      <h2>Upcoming Events <small><a href="events.xml">RSS</a></small></h2>
+      <div class="events-header">
+        <span>Date</span>
+        <span>Location</span>
+        <span>Event</span>
+      </div>
+      <ul id="upcoming-list" class="events-list">
+        <!-- Filled dynamically -->
+      </ul>
+    </section>
 
-      <footer style="text-align: center; font-size: 0.9rem; color: #666">
-        <p>&copy; 2025 Checkpoint</p>
-        <p>
-          <a href="https://www.linkedin.com/company/checkpoint-community/" target="_blank">LinkedIn</a> |
-          <a href="https://x.com/0xcpoint" target="_blank">Twitter</a>
-        </p>
-      </footer>
-    </div>
+    <section id="past-events">
+      <h2>Past Events</h2>
+      <div class="events-header">
+        <span>Date</span>
+        <span>Location</span>
+        <span>Event</span>
+      </div>
+      <ul id="past-list" class="events-list">
+        <!-- Filled dynamically -->
+      </ul>
+    </section>
 
-    
+    <section id="dojo-carousel">
+      <h2>Our First ML Dojo – July 13, 2025</h2>
+      <div class="carousel">
+        <button class="carousel-btn" id="prevBtn">&#10094;</button>
+        <img id="carouselImage" src="assets/images/2025-july-13-dojo/mldojo1-1.jpg" alt="Coding Dojo Photo">
+        <button class="carousel-btn" id="nextBtn">&#10095;</button>
+      </div>
+    </section>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        const res = await fetch('events.json');
-        const events = await res.json();
-        // Normalize today's date to midnight for consistent comparisons
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const upcomingList = document.getElementById("upcoming-list");
-        const pastList = document.getElementById("past-list");
+    <footer style="text-align: center; font-size: 0.9rem; color: #666">
+      <p>&copy; 2025 Checkpoint</p>
+      <p>
+        <a href="https://www.linkedin.com/company/checkpoint-community/" target="_blank">LinkedIn</a> |
+        <a href="https://x.com/0xcpoint" target="_blank">Twitter</a>
+      </p>
+    </footer>
+  </div>
 
-        // Split and sort: upcoming (soonest first), past (most recent first)
-        const upcoming = events
-          .filter((e) => {
-            const d = new Date(e.date);
-            d.setHours(0, 0, 0, 0);
-            return d >= today;
-          })
-          .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-        const past = events
-          .filter((e) => {
-            const d = new Date(e.date);
-            d.setHours(0, 0, 0, 0);
-            return d < today;
-          })
-          .sort((a, b) => new Date(b.date) - new Date(a.date));
 
-        const dateFormatter = new Intl.DateTimeFormat(undefined, {
-          weekday: 'short',
-          day: '2-digit',
-          month: 'short',
-          year: 'numeric'
-        });
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const res = await fetch('events.json');
+      const events = await res.json();
+      // Normalize today's date to midnight for consistent comparisons
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const upcomingList = document.getElementById("upcoming-list");
+      const pastList = document.getElementById("past-list");
 
-        const renderItem = (evt) => {
-          const eventDate = new Date(evt.date);
-          const li = document.createElement("li");
-          li.className = "event-row";
-          li.innerHTML = `
+      // Split and sort: upcoming (soonest first), past (most recent first)
+      const upcoming = events
+        .filter((e) => {
+          const d = new Date(e.date);
+          d.setHours(0, 0, 0, 0);
+          return d >= today;
+        })
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+      const past = events
+        .filter((e) => {
+          const d = new Date(e.date);
+          d.setHours(0, 0, 0, 0);
+          return d < today;
+        })
+        .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      const dateFormatter = new Intl.DateTimeFormat(undefined, {
+        month: 'short',
+        day: '2-digit',
+        weekday: 'short',
+        year: 'numeric'
+      });
+
+      const renderItem = (evt) => {
+        const eventDate = new Date(evt.date);
+        const li = document.createElement("li");
+        li.className = "event-row";
+        li.innerHTML = `
             <time class="event-date" datetime="${evt.date}">
               ${dateFormatter.format(eventDate)}
             </time>
-            <span class="event-location">${evt.location}</span>
             <a class="event-title" href="${evt.url}" target="_blank" rel="noopener noreferrer">${evt.title}</a>
-          `;
-          return li;
-        };
+            <span class="event-location">${evt.location}</span>
 
-        upcoming.forEach((evt) => upcomingList.appendChild(renderItem(evt)));
-        past.forEach((evt) => pastList.appendChild(renderItem(evt)));
-      });
+            `;
+        return li;
+      };
+
+      upcoming.forEach((evt) => upcomingList.appendChild(renderItem(evt)));
+      past.forEach((evt) => pastList.appendChild(renderItem(evt)));
+    });
 
     const carouselImages = [
-        "assets/images/2025-july-13-dojo/mldojo1-1.jpg",
-        "assets/images/2025-july-13-dojo/mldojo1-2.jpg",
-        "assets/images/2025-july-13-dojo/mldojo1-3.jpg"
+      "assets/images/2025-july-13-dojo/mldojo1-1.jpg",
+      "assets/images/2025-july-13-dojo/mldojo1-2.jpg",
+      "assets/images/2025-july-13-dojo/mldojo1-3.jpg"
     ];
 
     let currentImageIndex = 0;
@@ -134,15 +137,16 @@
     const nextBtn = document.getElementById("nextBtn");
 
     prevBtn.addEventListener("click", () => {
-        currentImageIndex =
+      currentImageIndex =
         (currentImageIndex - 1 + carouselImages.length) % carouselImages.length;
-        imgElement.src = carouselImages[currentImageIndex];
+      imgElement.src = carouselImages[currentImageIndex];
     });
 
     nextBtn.addEventListener("click", () => {
-        currentImageIndex = (currentImageIndex + 1) % carouselImages.length;
-        imgElement.src = carouselImages[currentImageIndex];
+      currentImageIndex = (currentImageIndex + 1) % carouselImages.length;
+      imgElement.src = carouselImages[currentImageIndex];
     });
-    </script>
-  </body>
+  </script>
+</body>
+
 </html>
