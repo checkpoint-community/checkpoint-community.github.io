@@ -4,63 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Checkpoint</title>
-    <style>
-      /* Basic reset and typography */
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        font-family: Arial, sans-serif;
-        line-height: 1.6;
-        color: #333;
-        padding: 20px;
-      }
-      a {
-        color: #0066cc;
-        text-decoration: none;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-
-      /* Container */
-      .container {
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
-      header {
-        text-align: center;
-        margin-bottom: 2rem;
-      }
-      header h1 {
-        font-size: 2rem;
-      }
-
-      section {
-        margin-bottom: 2rem;
-      }
-      section h2 {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
-      }
-
-      ul {
-        margin-left: 1rem;
-        margin-bottom: 1rem;
-      }
-      li {
-        margin-bottom: 0.5rem;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="container">
       <header>
         <h1>Checkpoint</h1>
-        <p>There are many other ML enthusiasts just like you.</p>
+        <p class="lead">There are many other ML enthusiasts just like you.</p>
         <nav>
           <a href="index.html">Home</a> | <a href="blog.html">Blog</a>
         </nav>
@@ -77,15 +27,25 @@
       </section>
 
       <section id="upcoming-events">
-        <h2>Upcoming Events <a href="events.xml" style="font-size:0.8rem">RSS</a></h2>
-        <ul id="upcoming-list">
+        <h2>Upcoming Events <small><a href="events.xml">RSS</a></small></h2>
+        <div class="events-header">
+          <span>Date</span>
+          <span>Location</span>
+          <span>Event</span>
+        </div>
+        <ul id="upcoming-list" class="events-list">
           <!-- Filled dynamically -->
         </ul>
       </section>
 
       <section id="past-events">
         <h2>Past Events</h2>
-        <ul id="past-list">
+        <div class="events-header">
+          <span>Date</span>
+          <span>Location</span>
+          <span>Event</span>
+        </div>
+        <ul id="past-list" class="events-list">
           <!-- Filled dynamically -->
         </ul>
       </section>
@@ -108,79 +68,58 @@
       </footer>
     </div>
 
-    <style>
-        #dojo-carousel {
-          text-align: center;
-          margin-bottom: 2rem;
-        }
-      
-        .carousel {
-          position: relative;
-          max-width: 100%;
-          margin: 0 auto;
-        }
-      
-        .carousel img {
-          max-width: 100%;
-          height: auto;
-          border-radius: 10px;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-      
-        .carousel-btn {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          font-size: 2rem;
-          background-color: rgba(0,0,0,0.4);
-          color: white;
-          border: none;
-          padding: 0.5rem 1rem;
-          cursor: pointer;
-          z-index: 2;
-        }
-      
-        #prevBtn {
-          left: 0;
-        }
-      
-        #nextBtn {
-          right: 0;
-        }
-      
-        .carousel-btn:hover {
-          background-color: rgba(0,0,0,0.6);
-        }
-      </style>
+    
 
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
         const res = await fetch('events.json');
         const events = await res.json();
+        // Normalize today's date to midnight for consistent comparisons
         const today = new Date();
+        today.setHours(0, 0, 0, 0);
         const upcomingList = document.getElementById("upcoming-list");
         const pastList = document.getElementById("past-list");
 
-        events.forEach((evt) => {
+        // Split and sort: upcoming (soonest first), past (most recent first)
+        const upcoming = events
+          .filter((e) => {
+            const d = new Date(e.date);
+            d.setHours(0, 0, 0, 0);
+            return d >= today;
+          })
+          .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        const past = events
+          .filter((e) => {
+            const d = new Date(e.date);
+            d.setHours(0, 0, 0, 0);
+            return d < today;
+          })
+          .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        const dateFormatter = new Intl.DateTimeFormat(undefined, {
+          weekday: 'short',
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric'
+        });
+
+        const renderItem = (evt) => {
           const eventDate = new Date(evt.date);
           const li = document.createElement("li");
+          li.className = "event-row";
           li.innerHTML = `
-            <time datetime="${evt.date}">
-              ${eventDate.toLocaleDateString(undefined, {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              })}
+            <time class="event-date" datetime="${evt.date}">
+              ${dateFormatter.format(eventDate)}
             </time>
-             – ${evt.location} –
-            <a href="${evt.url}" target="_blank">${evt.title}</a>
+            <span class="event-location">${evt.location}</span>
+            <a class="event-title" href="${evt.url}" target="_blank" rel="noopener noreferrer">${evt.title}</a>
           `;
-          if (eventDate >= today) {
-            upcomingList.appendChild(li);
-          } else {
-            pastList.appendChild(li);
-          }
-        });
+          return li;
+        };
+
+        upcoming.forEach((evt) => upcomingList.appendChild(renderItem(evt)));
+        past.forEach((evt) => pastList.appendChild(renderItem(evt)));
       });
 
     const carouselImages = [
