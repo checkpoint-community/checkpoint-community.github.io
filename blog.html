@@ -15,8 +15,16 @@
         posts.forEach(p => {
           const li = document.createElement('li');
           const embedUrl = p.source_url || p.url || p.src;
-          const url = `post.html?url=${encodeURIComponent(embedUrl)}&title=${encodeURIComponent(p.title || '')}&date=${encodeURIComponent(p.date || '')}`;
-          li.innerHTML = `<a href="${url}">${p.title}</a>` + (p.date ? ` <small>${p.date}</small>` : '');
+          let hostname = '';
+          try { hostname = new URL(embedUrl).hostname.replace(/^www\./, ''); } catch (e) {}
+          const blocklist = ['linkedin.com'];
+          const blocked = blocklist.includes(hostname);
+          if (blocked) {
+            li.innerHTML = `<a href="${embedUrl}" target="_blank" rel="noopener noreferrer">${p.title}</a>` + (p.date ? ` <small>${p.date}</small>` : '');
+          } else {
+            const url = `post.html?url=${encodeURIComponent(embedUrl)}&title=${encodeURIComponent(p.title || '')}&date=${encodeURIComponent(p.date || '')}`;
+            li.innerHTML = `<a href="${url}">${p.title}</a>` + (p.date ? ` <small>${p.date}</small>` : '');
+          }
           list.appendChild(li);
         });
       } catch (e) {

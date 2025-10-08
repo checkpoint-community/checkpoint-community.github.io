@@ -46,7 +46,11 @@
         if (url) parts.push(`<a href="${url}" target="_blank" rel="noopener noreferrer">Original</a>`);
         document.getElementById('post-meta').innerHTML = parts.join(' · ');
         if (url) {
-          document.getElementById('embed-frame').src = url;
+          const frame = document.getElementById('embed-frame');
+          frame.src = url;
+          const msg = document.createElement('div');
+          msg.innerHTML = '<small>If the embed is blocked by the source site, use the Original link above.</small>';
+          document.getElementById('embed-container').appendChild(msg);
         } else {
           document.getElementById('embed-container').innerHTML = '<p>Missing url parameter.</p>';
         }
