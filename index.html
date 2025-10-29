@@ -155,18 +155,31 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
-        const res = await fetch('events.json');
+        const res = await fetch("events.json");
         const events = await res.json();
         const today = new Date();
+        today.setHours(0, 0, 0, 0);
         const upcomingList = document.getElementById("upcoming-list");
         const pastList = document.getElementById("past-list");
 
-        events.forEach((evt) => {
-          const eventDate = new Date(evt.date);
+        const eventsWithDates = events.map((evt) => ({
+          ...evt,
+          eventDate: new Date(evt.date),
+        }));
+
+        const upcomingEvents = eventsWithDates
+          .filter((evt) => evt.eventDate >= today)
+          .sort((a, b) => a.eventDate - b.eventDate);
+
+        const pastEvents = eventsWithDates
+          .filter((evt) => evt.eventDate < today)
+          .sort((a, b) => b.eventDate - a.eventDate);
+
+        const renderEvent = (evt) => {
           const li = document.createElement("li");
           li.innerHTML = `
             <time datetime="${evt.date}">
-              ${eventDate.toLocaleDateString(undefined, {
+              ${evt.eventDate.toLocaleDateString(undefined, {
                 month: "long",
                 day: "numeric",
                 year: "numeric",
@@ -175,11 +188,15 @@
              – ${evt.location} –
             <a href="${evt.url}" target="_blank">${evt.title}</a>
           `;
-          if (eventDate >= today) {
-            upcomingList.appendChild(li);
-          } else {
-            pastList.appendChild(li);
-          }
+          return li;
+        };
+
+        upcomingEvents.forEach((evt) => {
+          upcomingList.appendChild(renderEvent(evt));
+        });
+
+        pastEvents.forEach((evt) => {
+          pastList.appendChild(renderEvent(evt));
         });
       });
 
